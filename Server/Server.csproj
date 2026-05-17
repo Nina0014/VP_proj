@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BC4F5CB-67CD-4277-A67D-985504E748EA}</ProjectGuid>
+    <ProjectGuid>{4596D668-30A9-4EDA-9510-79916332738F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SmartGrid</RootNamespace>
-    <AssemblyName>SmartGrid</AssemblyName>
+    <RootNamespace>Server</RootNamespace>
+    <AssemblyName>Server</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
