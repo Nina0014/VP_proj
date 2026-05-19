@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace Service
 {
-    public class SmartGridService : ISmartGridService
+    public class SmartGridService : ISmartGridService, IDisposable
     {
+        private bool disposed = false;
+
         public void StartSession(string meta)
         {
             Console.WriteLine($"Session started: {meta}");            
@@ -32,7 +36,9 @@ namespace Common
                     {
                         Message = "Timestamp is required.",
                         Field = "Timestamp"
-                    });
+                    },
+                new FaultReason("Validation error occured.")
+                );
             }
 
             if (sample.Frequency <= 0)
@@ -42,7 +48,9 @@ namespace Common
                     {
                         Message = "Frequency must be greater than 0.",
                         Field = "Frequency"
-                    });
+                    },
+                new FaultReason("Validation error occured.")
+                );
             }
 
             if (sample.Voltage < 0 || sample.Voltage > 1000)
@@ -52,7 +60,9 @@ namespace Common
                     {
                         Message = "Voltage out of allowed range.",
                         Field = "Voltage"
-                    });
+                    },
+                new FaultReason("Validation error occured.")
+                );
             }
 
             if (sample.Current < 0 || sample.Current > 500)
@@ -62,7 +72,9 @@ namespace Common
                     {
                         Message = "Current out of allowed range.",
                         Field = "Current"
-                    });
+                    },
+                new FaultReason("Validation error occured.")
+                );
             }
 
             if (sample.PowerUsage < 0 || sample.PowerUsage > 20)
@@ -72,7 +84,9 @@ namespace Common
                     {
                         Message = "Power usage out of allowed range.",
                         Field = "PowerUsage"
-                    });
+                    },
+                new FaultReason("Validation error occured.")
+                );
             }
 
             Console.WriteLine($"Sample: {sample.Timestamp}\nVoltage={sample.Voltage}\nCurrent={sample.Current}\nPower={sample.PowerUsage}\nFrequeny={sample.Frequency}\nFault={sample.FaultIndicator}");
@@ -81,6 +95,29 @@ namespace Common
         public void EndSession()
         {
             Console.WriteLine("Session ended");
+        }
+
+        ~SmartGridService()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    Console.WriteLine("Disposing.");
+                }
+                disposed = true;
+            }
         }
     }
 }
