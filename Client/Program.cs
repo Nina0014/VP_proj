@@ -64,8 +64,7 @@ namespace Client
                         return;
                     }
 
-                    Directory.CreateDirectory(
-                        Path.GetDirectoryName(fullInvalidCsvPath));
+                    Directory.CreateDirectory(Path.GetDirectoryName(fullInvalidCsvPath));
 
                     File.WriteAllText(fullInvalidCsvPath, "RowNumber,RawData,ErrorMessage" + Environment.NewLine);
 
